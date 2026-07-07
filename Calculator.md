@@ -478,3 +478,939 @@ tk.Button(
 
 root.mainloop()
 
+```
+
+## Explaination
+
+This program is a **Scientific Calculator** built using **Tkinter** (GUI) and Python's **math** module. It allows users to perform both basic arithmetic and scientific calculations through a graphical interface.
+
+I'll explain it section by section.
+
+---
+
+# Overall Program Flow
+
+```text
+Start Program
+      │
+      ▼
+Import Libraries
+      │
+      ▼
+Define Calculator Functions
+      │
+      ▼
+Create Main Window
+      │
+      ▼
+Create Entry Box
+      │
+      ▼
+Create Scientific Buttons
+      │
+      ▼
+Create Number & Operator Buttons
+      │
+      ▼
+Create π and e Buttons
+      │
+      ▼
+Wait for User Input (mainloop)
+```
+
+---
+
+# 1. Import Libraries
+
+```python
+import tkinter as tk
+from tkinter import messagebox
+import math
+```
+
+### Explanation
+
+### `import tkinter as tk`
+
+Imports the Tkinter library and gives it the shorter name `tk`.
+
+Used to create:
+
+* Window
+* Buttons
+* Labels
+* Entry box
+
+---
+
+### `from tkinter import messagebox`
+
+Imports the messagebox module.
+
+Used to display popup messages.
+
+Example:
+
+```
++---------------------+
+| Error!              |
+| Invalid Expression  |
+|        OK           |
++---------------------+
+```
+
+---
+
+### `import math`
+
+Imports Python's math library.
+
+Provides functions like:
+
+```python
+math.sqrt()
+math.sin()
+math.cos()
+math.tan()
+math.log()
+math.factorial()
+math.pi
+math.e
+```
+
+---
+
+# 2. press() Function
+
+```python
+def press(value):
+    entry.insert(tk.END, value)
+```
+
+### Purpose
+
+Adds the clicked button's value into the entry box.
+
+Example:
+
+Current Entry
+
+```
+12
+```
+
+Click
+
+```
++
+```
+
+Result
+
+```
+12+
+```
+
+---
+
+### `entry.insert()`
+
+Syntax
+
+```python
+entry.insert(position, text)
+```
+
+Here
+
+```python
+tk.END
+```
+
+means
+
+> Insert at the end.
+
+---
+
+# 3. clear()
+
+```python
+def clear():
+    entry.delete(0, tk.END)
+```
+
+Deletes everything inside the entry box.
+
+Example
+
+Before
+
+```
+12+35
+```
+
+After
+
+```
+(empty)
+```
+
+---
+
+# 4. backspace()
+
+```python
+text = entry.get()
+```
+
+Gets the current text.
+
+Example
+
+```
+12345
+```
+
+---
+
+```python
+text[:-1]
+```
+
+Removes the last character.
+
+Example
+
+```
+12345
+```
+
+becomes
+
+```
+1234
+```
+
+---
+
+Then
+
+```python
+entry.insert(0, text[:-1])
+```
+
+Displays the updated text.
+
+---
+
+# 5. equal()
+
+```python
+expression = entry.get()
+```
+
+Gets the mathematical expression.
+
+Example
+
+```
+15+20/5
+```
+
+---
+
+```python
+result = eval(expression)
+```
+
+`eval()` evaluates the expression.
+
+Example
+
+```
+15+20/5
+```
+
+becomes
+
+```
+19
+```
+
+---
+
+Then
+
+```python
+entry.insert(0, result)
+```
+
+Shows the answer.
+
+---
+
+### Exception Handling
+
+```python
+except:
+```
+
+If the user enters
+
+```
+10++*
+```
+
+instead of crashing,
+
+it shows
+
+```
+Invalid Expression
+```
+
+---
+
+# 6. sqrt()
+
+```python
+value=float(entry.get())
+```
+
+Reads the number.
+
+Example
+
+```
+49
+```
+
+---
+
+```python
+math.sqrt(value)
+```
+
+Calculates
+
+```
+√49
+```
+
+Result
+
+```
+7
+```
+
+---
+
+# 7. square()
+
+```python
+value**2
+```
+
+Raises the number to power 2.
+
+Example
+
+```
+9
+```
+
+becomes
+
+```
+81
+```
+
+---
+
+# 8. power()
+
+Suppose user enters
+
+```
+2,5
+```
+
+---
+
+```python
+split(",")
+```
+
+Produces
+
+```python
+["2","5"]
+```
+
+---
+
+Then
+
+```python
+math.pow(2,5)
+```
+
+Result
+
+```
+32
+```
+
+---
+
+So this function expects input like:
+
+```
+Base,Exponent
+```
+
+Example
+
+```
+3,4
+```
+
+Result
+
+```
+81
+```
+
+---
+
+# 9. factorial()
+
+```python
+math.factorial(value)
+```
+
+Example
+
+```
+5
+```
+
+Result
+
+```
+120
+```
+
+Because
+
+```
+5×4×3×2×1
+```
+
+---
+
+# 10. sin()
+
+```python
+value = math.radians(float(entry.get()))
+```
+
+The calculator accepts degrees.
+
+Python's `math.sin()` requires radians.
+
+Example
+
+```
+90°
+```
+
+becomes
+
+```
+1.5708 radians
+```
+
+---
+
+Then
+
+```python
+math.sin(value)
+```
+
+returns
+
+```
+1
+```
+
+---
+
+### Why `round()`?
+
+Without rounding
+
+```
+0.99999999998
+```
+
+With rounding
+
+```
+1
+```
+
+---
+
+# 11. cos()
+
+Same process.
+
+Example
+
+```
+60°
+```
+
+Result
+
+```
+0.5
+```
+
+---
+
+# 12. tan()
+
+First
+
+```python
+if value % 180 == 90
+```
+
+Checks
+
+```
+90°
+
+270°
+
+450°
+```
+
+because tan is undefined there.
+
+Instead of crashing,
+
+it displays
+
+```
+undefined
+```
+
+Otherwise
+
+```python
+math.tan()
+```
+
+is calculated.
+
+---
+
+# 13. log()
+
+```python
+math.log10(value)
+```
+
+Computes base-10 logarithm.
+
+Example
+
+```
+100
+```
+
+Result
+
+```
+2
+```
+
+because
+
+```
+10² = 100
+```
+
+---
+
+# 14. ln()
+
+```python
+math.log(value)
+```
+
+Computes the natural logarithm.
+
+Base
+
+```
+e
+```
+
+Example
+
+```
+ln(e)
+```
+
+Result
+
+```
+1
+```
+
+---
+
+# 15. Main Window
+
+```python
+root = tk.Tk()
+```
+
+Creates the main application window.
+
+---
+
+```python
+root.title()
+```
+
+Sets the window title.
+
+---
+
+```python
+root.geometry("520x650")
+```
+
+Window size
+
+```
+520 × 650
+```
+
+---
+
+```python
+root.resizable(False,False)
+```
+
+Prevents resizing.
+
+---
+
+```python
+root.configure(bg="#F5F7FA")
+```
+
+Sets the background color.
+
+---
+
+# 16. Entry Widget
+
+```python
+entry = tk.Entry(...)
+```
+
+This is the calculator display.
+
+Example
+
+```
+----------------------
+|            25+10   |
+----------------------
+```
+
+---
+
+### Important Properties
+
+### `font`
+
+Text size.
+
+---
+
+### `justify="right"`
+
+Numbers appear on the right side.
+
+Like a real calculator.
+
+---
+
+### `insertbackground`
+
+Changes the cursor color.
+
+---
+
+# 17. Grid Layout
+
+```python
+entry.grid(...)
+```
+
+Places the entry box.
+
+---
+
+```python
+columnspan=5
+```
+
+The display stretches across all five columns.
+
+---
+
+# 18. Button Style
+
+```python
+btn_font
+```
+
+Stores the font.
+
+Instead of writing
+
+```python
+font=("Arial",14,"bold")
+```
+
+20 times,
+
+you define it once and reuse it.
+
+---
+
+# 19. Scientific Button List
+
+```python
+scientific = [
+("√",sqrt),
+...
+]
+```
+
+Each tuple contains
+
+```
+(Button Text , Function)
+```
+
+Example
+
+```
+("√",sqrt)
+```
+
+means
+
+```
+Button shows
+
+√
+
+↓
+
+Calls sqrt()
+```
+
+---
+
+# 20. Creating Scientific Buttons
+
+```python
+for text,cmd in scientific:
+```
+
+Loops through every tuple.
+
+Instead of writing ten separate `Button()` calls, one loop creates them all.
+
+---
+
+```python
+command = cmd
+```
+
+Assigns the corresponding function to each button.
+
+---
+
+# 21. Calculator Buttons
+
+```python
+buttons = [...]
+```
+
+Stores all number and operator buttons.
+
+```
+7 8 9 /
+
+4 5 6 *
+
+1 2 3 -
+
+0 . + =
+```
+
+---
+
+# 22. Lambda Function
+
+```python
+lambda x=item: press(x)
+```
+
+Suppose the button text is
+
+```
+7
+```
+
+Clicking it runs
+
+```python
+press("7")
+```
+
+If the button text is
+
+```
++
+```
+
+It runs
+
+```python
+press("+")
+```
+
+This single lambda handles all number and operator buttons.
+
+---
+
+# 23. Equal Button
+
+```python
+if item == "=":
+    cmd = equal
+```
+
+Clicking
+
+```
+=
+```
+
+calls
+
+```python
+equal()
+```
+
+instead of inserting "=" into the entry box.
+
+---
+
+# 24. Backspace Button
+
+```python
+elif item=="⌫":
+```
+
+Calls
+
+```python
+backspace()
+```
+
+instead of inserting the symbol.
+
+---
+
+# 25. π Button
+
+```python
+command=lambda: press(str(math.pi))
+```
+
+Clicking π inserts
+
+```
+3.141592653589793
+```
+
+into the entry box.
+
+---
+
+# 26. e Button
+
+```python
+command=lambda: press(str(math.e))
+```
+
+Inserts
+
+```
+2.718281828459045
+```
+
+---
+
+# 27. mainloop()
+
+```python
+root.mainloop()
+```
+
+Starts Tkinter's event loop.
+
+The program now waits for user actions such as:
+
+* Clicking buttons
+* Typing into the entry box
+* Closing the window
+
+Without `mainloop()`, the window would open and close immediately.
+
+---
+
+# Concepts Used in This Project
+
+This scientific calculator demonstrates many important Python and Tkinter concepts:
+
+* **Functions** (`def`)
+* **Exception handling** (`try` / `except`)
+* **Modules** (`math`, `tkinter`)
+* **GUI widgets** (`Tk`, `Entry`, `Button`)
+* **Lambda functions**
+* **Lists** (button definitions)
+* **Loops** (`for`)
+* **String methods** (`split()`)
+* **Type conversion** (`int()`, `float()`)
+* **Mathematical functions** (`sqrt`, `pow`, `factorial`, `sin`, `cos`, `tan`, `log`)
+* **Grid layout manager**
+* **Widget methods** (`insert()`, `delete()`, `get()`, `grid()`)
+
+By understanding this project, you'll have a strong foundation for creating more advanced Tkinter applications such as unit converters, billing systems, login forms, attendance systems, or even full-featured desktop applications.
